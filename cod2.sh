@@ -33,8 +33,6 @@ then
 	echo "DONE mysql-server"
 	apt-get -y install lighttpd
 	echo "DONE lighttpd"
-	apt-get -y install php5
-	echo "DONE php5"
 	lighty-enable-mod cgi
 	lighty-enable-mod fastcgi
 	lighty-enable-mod fastcgi-php
@@ -50,6 +48,12 @@ then
 		echo "DONE phpmyadmin"
 		ln -s /usr/share/phpmyadmin/ /var/www/
 	fi
+	
+	# bicycle! bicycle!
+	service lighttpd stop
+	service apache2 stop
+	apt-get purge apache2
+	service lighttpd start
 fi
 
 # main user
@@ -61,12 +65,14 @@ chown $user:$user /home/$user
 echo "created user $user"
 passwd $user
 
-#
-cp ../cod2install /home/$user/cod2install
+# copy files to new user
+cp ~/cod2install /home/$user/cod2install -R
+chmod 777 /home/$user/cod2install -R
 
 # log in new user
-su $user
-
+sudo -u $user bash << GetOut
+echo "logged in as $user"
 # set up servers
 cd ~/
 ~/cod2install/parts/cod2_servers.sh
+GetOut
