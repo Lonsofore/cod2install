@@ -32,6 +32,7 @@ All what you need to start cod2 server(s):
 1. On command line, type in the following commands:
 ```sh
 apt-get install git -y
+git clone https://github.com/lonsofore/cod2install
 cd cod2install
 chmod +x cod2.sh
 ./cod2.sh
