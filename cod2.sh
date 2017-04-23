@@ -19,7 +19,7 @@ echo "done upgrade"
 # tools
 echo
 echo "installing tools..."
-apt-get -y install geoip-bin git vim make screen zip unzip > /dev/null
+apt-get -y install geoip-bin git vim make screen zip unzip zram-config > /dev/null
 echo "done tools"
 
 # no-ip
