@@ -2,13 +2,13 @@
 Scripts, which can help you install cod2 servers on your VDS much faster.
 I put here all steps, which I always do on my servers.
 
-About:
+###About:
 I recommend you to look this link first:
 https://killtube.org/showthread.php?2454-Work-in-progress-Setup-CoD2-on-your-ubuntu-14-04-server
 And you will need to do all this points if you want to install cod2 server.
 But! With my sh you can do all this steps much faster!
 
-So, what does this do:
+###So, what does this do:
 - Updating and upgrading packets
 - Install all libs for cod2
 - Install some tools, which you will need (screen git make zip unzip geoip-bin vim)
@@ -24,16 +24,14 @@ So, what does this do:
 - Make .sh files to launch your servers (for each cod2 version)
 - Reboot your machine finally
 
-So, what do you need to start it:
+###And what do you need to start it:
 1. Get VDS with Ubuntu 14.04
 2. Log in as root
 3. Type: 
-```
-apt-get install git -y
-cd cod2install
-chmod +x cod2.sh
-./cod2.sh
-```
+`apt-get install git -y`
+`cd cod2install`
+`chmod +x cod2.sh`
+`./cod2.sh`
 4. Enter your info, when it will ask!
 
 Community / Help: http://killtube.org/forum.php
