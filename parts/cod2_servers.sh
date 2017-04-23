@@ -61,7 +61,7 @@ echo "done main files for 1.3"
 
 
 # libcod
-cd cod2
+cd ~/cod2
 git clone https://github.com/voron00/libcod
 cd libcod
 
