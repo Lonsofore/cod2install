@@ -7,7 +7,12 @@ I put here all steps, which I always do on my servers.
 ## About:
 I recommend you to look this [link](https://killtube.org/showthread.php?2454-Work-in-progress-Setup-CoD2-on-your-ubuntu-14-04-server) first. 
 And you will need to do all this points if you want to install cod2 server.
+
 But! With my sh you can do all this steps much faster!
+
+I measured the time from VDS purchase to full CoD2 installation with this .sh and it's less than 10 minutes (with uploading all cod2 files!).
+
+So, any beginner, even he doesn't know anything about Linux can install CoD2 server on Linux now!
 
 
 ## So, what does this do:
