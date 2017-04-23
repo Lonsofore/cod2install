@@ -18,13 +18,13 @@ mkdir cod2_1_3/main
 # download main files
 echo
 echo "Time to upload main files" 
-echo "Type 0 if you will upload by yourself"
+echo "Type 0 if you will upload by yourself via ftp"
 echo "Type 1 if you want to try download it from the internet"
 read -p "Answer: " -r
 case $REPLY in
 	0)
 		echo "Now place your CoD2 files in ~/cod2/main"
-		echo "Notice: don't duplicate files. In 1.2 and 1.3 folders place iw-15 and last localized files only."
+		echo "Notice: don't duplicate files. In 1.2 and 1.3 folders place iw_15 and last localized file only"
 		read -p "Done? " -r
 		;;
 	1)
