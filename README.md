@@ -1,5 +1,5 @@
 # cod2install
-Scripts, which can help you install cod2 servers on your VDS much faster.
+Script, which can help you install cod2 servers on your VDS much faster.
 
 I put here all steps, which I always do on my servers.
 
@@ -25,7 +25,6 @@ All what you need to start cod2 server(s):
 - Install cod2_lnxded for all versions
 - Install YOUR servers for each version (ask you about your fs_game, config name and port)
 - Make .sh files to launch your servers (for each cod2 version)
-- Reboot your machine finally
 
 
 ## And what do you need to start it:
@@ -43,6 +42,6 @@ chmod +x cod2.sh
 ## Support:
 Community / Help: http://killtube.org/forum.php
 
-**And please, tell me if something is wrong. My contacts:**
+And please, tell me if something is wrong. My contacts:
 - Steam: [lonsofore](http://steamcommunity.com/id/lonsofore/)
 - Skype: wmsys_
