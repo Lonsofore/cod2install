@@ -28,27 +28,35 @@ case $REPLY in
 		read -p "Done? " -r
 		;;
 	1)
-		wget -O ~/cod2/main/main.zip https://getfile.dokpub.com/yandex/get/https://yadi.sk/d/DpHUSZMP3HEsVR
-		unzip ~/cod2/main/main.zip -d ~/cod2/main
-		rm ~/cod2/main/main.zip
+		wget -O ~/cod2/main/main.zip http://files.cod2.ru/.cod2install/main.zip
+		if [ $? -eq 0 ]; then
+			unzip ~/cod2/main/main.zip -d ~/cod2/main
+			rm ~/cod2/main/main.zip
+		else
+			echo
+			echo "Broken link! Report it, please!"
+			echo "Place your CoD2 files in ~/cod2/main"
+			echo "Notice: don't duplicate files. In 1.2 and 1.3 folders place iw_15 and last localized file only"
+			read -p "Done? " -r
+		fi
 		;;
 esac
 
 # main files link - 1.0
 cd ~/cod2_1_0/main
-for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln -s $file $fname; done
+for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
 echo "done main files for 1.0"
 
 # main files link - 1.2
 cd ~/cod2_1_2/main
-for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln -s $file $fname; done
-for file in ~/cod2/main/1.2/*; do fname=${file##*/}; ln -s $file $fname; done
+for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
+for file in ~/cod2/main/1.2/*; do fname=${file##*/}; ln $file $fname; done
 echo "done main files for 1.2"
 
 # main files link - 1.3
 cd ~/cod2_1_3/main
-for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln -s $file $fname; done
-for file in ~/cod2/main/1.3/*; do fname=${file##*/}; ln -s $file $fname; done
+for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
+for file in ~/cod2/main/1.3/*; do fname=${file##*/}; ln $file $fname; done
 echo "done main files for 1.3"
 
 

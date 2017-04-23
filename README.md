@@ -36,6 +36,7 @@ All what you need to start cod2 server(s):
 0. Get VDS with Ubuntu 14.04 and log in as root there.
 1. On command line, type in the following commands:
 ```sh
+apt-get update
 apt-get install git -y
 git clone https://github.com/lonsofore/cod2install
 cd cod2install
