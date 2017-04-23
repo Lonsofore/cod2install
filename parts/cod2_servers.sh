@@ -44,19 +44,19 @@ esac
 
 # main files link - 1.0
 cd ~/cod2_1_0/main
-for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
+for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln -s $file $fname; done
 echo "done main files for 1.0"
 
 # main files link - 1.2
 cd ~/cod2_1_2/main
-for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
-for file in ~/cod2/main/1.2/*; do fname=${file##*/}; ln $file $fname; done
+for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln -s $file $fname; done
+for file in ~/cod2/main/1.2/*; do fname=${file##*/}; ln -s $file $fname; done
 echo "done main files for 1.2"
 
 # main files link - 1.3
 cd ~/cod2_1_3/main
-for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
-for file in ~/cod2/main/1.3/*; do fname=${file##*/}; ln $file $fname; done
+for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln -s $file $fname; done
+for file in ~/cod2/main/1.3/*; do fname=${file##*/}; ln -s $file $fname; done
 echo "done main files for 1.3"
 
 
