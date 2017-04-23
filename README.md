@@ -47,7 +47,9 @@ chmod +x cod2.sh
 
 
 ## Support:
-Community / Help: http://killtube.org/forum.php
+Community / Help: [killtube.org](http://killtube.org/forum.php)
+
+Your questions: [killtube thread](https://killtube.org/showthread.php?2873-cod2install-Install-CoD2-on-your-VDS-much-faster!)
 
 And please, tell me if something is wrong. My contacts:
 - Steam: [lonsofore](http://steamcommunity.com/id/lonsofore/)
