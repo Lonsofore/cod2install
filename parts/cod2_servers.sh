@@ -100,8 +100,10 @@ then
 		name=$REPLY
 		read -p "Write the name of your server's config (without .cfg): " -r
 		conf=$REPLY
-		read -p "Write your server's port: " -r
+		read -p "Write your server's port (default is 28960): " -r
 		port=$REPLY
+		read -p "Write 1 if it's cracked server or 0 if it isn't: " -r
+		cracked=$REPLY
 		
 		# 1.0
 		cd ~/cod2_1_0
@@ -111,7 +113,7 @@ then
 
 export LD_PRELOAD="\$HOME/cod2_1_0/libcod2_1_0.so"
 
-PARAMS="+set fs_game $name +set dedicated 2 +set net_port $port +exec $conf.cfg +set sv_cracked 1 +set sv_version 1.0"
+PARAMS="+set fs_game $name +set dedicated 2 +set net_port $port +exec $conf.cfg +set sv_cracked $cracked +set sv_version 1.0"
 
 while true ; do
 	"./cod2_lnxded" "\$PARAMS"
@@ -128,7 +130,7 @@ EOF
 
 export LD_PRELOAD="\$HOME/cod2_1_2/libcod2_1_2.so"
 
-PARAMS="+set fs_game $name +set dedicated 2 +set net_port $port +exec $conf.cfg +set sv_cracked 1 +set sv_version 1.2"
+PARAMS="+set fs_game $name +set dedicated 2 +set net_port $port +exec $conf.cfg +set sv_cracked $cracked +set sv_version 1.2"
 
 while true ; do
 	"./cod2_lnxded" "\$PARAMS"
@@ -145,7 +147,7 @@ EOF
 
 export LD_PRELOAD="\$HOME/cod2_1_3/libcod2_1_3.so"
 
-PARAMS="+set fs_game $name +set dedicated 2 +set net_port $port +exec $conf.cfg +set sv_cracked 1 +set sv_version 1.3"
+PARAMS="+set fs_game $name +set dedicated 2 +set net_port $port +exec $conf.cfg +set sv_cracked $cracked +set sv_version 1.3"
 
 while true ; do
 	"./cod2_lnxded" "\$PARAMS"
