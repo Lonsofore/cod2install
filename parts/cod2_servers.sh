@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # folders
 cd ~/
 mkdir cod2
@@ -21,7 +23,8 @@ echo "Type 1 if you want to try download it from the internet"
 read -p "Answer: " -r
 case $REPLY in
 	0)
-		echo "Now place your CoD2 1.3 files in ~/cod2/main"
+		echo "Now place your CoD2 files in ~/cod2/main"
+		echo "Notice: don't duplicate files. In 1.2 and 1.3 folders place iw-15 and last localized files only."
 		read -p "Done? " -r
 		;;
 	1)
@@ -34,19 +37,19 @@ esac
 # main files link - 1.0
 cd ~/cod2_1_0/main
 for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
-echo "DONE main files for 1.0"
+echo "done main files for 1.0"
 
 # main files link - 1.2
 cd ~/cod2_1_2/main
 for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
 for file in ~/cod2/main/1.2/*; do fname=${file##*/}; ln $file $fname; done
-echo "DONE main files for 1.2"
+echo "done main files for 1.2"
 
 # main files link - 1.3
 cd ~/cod2_1_3/main
 for file in ~/cod2/main/1.0/*; do fname=${file##*/}; ln $file $fname; done
 for file in ~/cod2/main/1.3/*; do fname=${file##*/}; ln $file $fname; done
-echo "DONE main files for 1.3"
+echo "done main files for 1.3"
 
 
 # libcod
@@ -57,17 +60,17 @@ cd libcod
 ./doit.sh cod2_1_0
 mv bin/libcod2_1_0.so ~/cod2_1_0/libcod2_1_0.so
 ./doit.sh clean
-echo "DONE libcod for 1.0"
+echo "done libcod for 1.0"
 
 ./doit.sh cod2_1_2
 mv bin/libcod2_1_2.so ~/cod2_1_2/libcod2_1_2.so
 ./doit.sh clean
-echo "DONE libcod for 1.0"
+echo "done libcod for 1.2"
 
 ./doit.sh cod2_1_3
 mv bin/libcod2_1_3.so ~/cod2_1_3/libcod2_1_3.so
 ./doit.sh clean
-echo "DONE libcod for 1.3"
+echo "done libcod for 1.3"
 
 # lnxded
 cp ~/cod2install/cod2_lnxded/1.0/cod2_lnxded ~/cod2_1_0/cod2_lnxded
@@ -86,16 +89,16 @@ cp ~/cod2install/cod2_lnxded/1.3/pb ~/cod2_1_3/pb -R
 
 # servers
 echo
-echo "Now place your servers folders in ~/cod2"
+echo "Now place your servers folders (fs_game) in ~/cod2"
 read -p "Done? " -r
 echo    
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
 	until [[ $REPLY =~ ^[Nn]$ ]]
 	do
-		read -p "Write the name of your server: " -r
+		read -p "Write the name of your server (fs_game): " -r
 		name=$REPLY
-		read -p "Write the name of your server's config: " -r
+		read -p "Write the name of your server's config (without .cfg): " -r
 		conf=$REPLY
 		read -p "Write your server's port: " -r
 		port=$REPLY
@@ -151,7 +154,7 @@ done
 exit 1
 EOF
 		
-		echo "DONE"
+		echo "done"
 		echo
 		read -p "Want to add another server? " -r
 	done
