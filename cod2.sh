@@ -5,12 +5,12 @@ chmod 777 parts -R
 
 # update packages
 echo "updating packets..."
-apt-get update > /dev/null
+apt-get update
 echo "done update"
 
 echo
 echo "upgrading packets..."
-apt-get upgrade -y > /dev/null
+apt-get upgrade -y
 echo "done upgrade"
 
 # cod2 requirements
@@ -19,7 +19,7 @@ echo "done upgrade"
 # tools
 echo
 echo "installing tools..."
-apt-get -y install geoip-bin git vim make screen zip unzip zram-config > /dev/null
+apt-get -y install geoip-bin git vim make screen zip unzip zram-config
 echo "done tools"
 
 # no-ip
@@ -36,13 +36,18 @@ read -p "Install web server? " -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
 	echo
+	echo "installing php5-cgi..."
+    apt-get install php5-cgi -y
+	echo "done php5-cgi"
+	
+	echo
 	echo "installing mysql-server..."
-    apt-get -y install mysql-server
+    apt-get install mysql-server -y
 	echo "done mysql-server"
 	
 	echo
 	echo "installing lighttpd..."
-	apt-get -y install lighttpd > /dev/null
+	apt-get install lighttpd -y
 	echo "done lighttpd"
 	
 	lighty-enable-mod cgi
