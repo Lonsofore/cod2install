@@ -40,8 +40,8 @@ apt-get update
 apt-get install git -y
 git clone https://github.com/lonsofore/cod2install
 cd cod2install
-chmod +x cod2.sh
-./cod2.sh
+chmod +x start.sh
+./start.sh
 ``` 
 2. Enter your info, when it will ask!
 
