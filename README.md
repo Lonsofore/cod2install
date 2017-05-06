@@ -21,15 +21,22 @@ All what you need to start cod2 server(s):
 - Install all libs for cod2
 - Install some tools, which you will need (screen git make zip unzip geoip-bin vim)
 - Ask you to install no-ip client (for dynamic dns. you will need this for gametracker.com)
-- Ask you to install web-server (lighttpd - small web-server - much smaller than apache)
+- Ask you to install web-server (lighttpd or apache2 - on your own)
 - Ask you to install phpmyadmin (only if you installed web-server)
 - Creates new user for cod2 (will ask you about name)
 - Creates all cod2 folders for all versions (it will use links, so you don't have to have main files for all versions)
-- Ask you to upload main files by yourself or download it from my link (from my link you can download it with more than 20 MB/s)
+- Ask you to upload main files by yourself or download it from my link or download it from torrent!
 - Install the latest version of libcod (from VoroN's repo)
 - Install cod2_lnxded for all versions
-- Install YOUR servers for each version (ask you about your fs_game, config name and port)
-- Make .sh files to launch your servers (for each cod2 version)
+- Install YOUR servers for each version (ask you about your sh name, fs_game, config name, cracked and port)
+- Make .sh files to launch your servers (for all CoD2 versions, what you need)
+
+
+## cod2_lnxded versions:
+This is the latest patched versions of CoD2 servers (from [this thread](https://killtube.org/showthread.php?1719-CoD2-Latest-cod2-linux-binaries-(1-0-1-2-1-3))):
+- 1.0: cod2_lnxded_1_0a
+- 1.2: cod2_lnxded_1_2c_patch_va_loc
+- 1.3: cod2_lnxded_1_3_patch_va_loc
 
 
 ## And what do you need to start it:
