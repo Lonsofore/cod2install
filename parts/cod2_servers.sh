@@ -147,6 +147,7 @@ aria2c \
 -d ~/cod2
 EOF
 					
+		chmod +x ~/cod2/torrent/seed.sh
 		# save our current crontab
 		crontab -l > mycron
 		# add sh into cron file
