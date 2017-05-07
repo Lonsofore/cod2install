@@ -83,7 +83,6 @@ do
 			--no-conf=true \
 			--summary-interval=0 \
 			--check-integrity=true \
-			--save-session torrent_log.txt \
 			--seed-time=0 \
 			-T $DIRECTORY/main.torrent \
 			-d ~/cod2 || has_error=1
@@ -151,7 +150,7 @@ EOF
 		# save our current crontab
 		crontab -l > mycron
 		# add sh into cron file
-		echo "@reboot screen -S test -d -m ~/cod2/torrent/seed.sh" >> mycron
+		echo "@reboot screen -S seed -d -m ~/cod2/torrent/seed.sh" >> mycron
 		# install new cron file
 		crontab mycron
 		rm mycron
