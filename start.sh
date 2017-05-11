@@ -148,7 +148,7 @@ fi
 # cod2 requirements
 if [ $inst_lib -eq 1 ]
 then
-	$DIRECTORY/parts/cod2_req.sh
+	$DIRECTORY/parts/req.sh
 fi
 
 # noip
@@ -251,7 +251,7 @@ else
 	# set up servers
 	if [ $inst_serv -eq 1 ]
 	then
-		~/cod2install/parts/cod2_servers.sh
+		~/cod2install/parts/cod2.sh
 	fi
 fi
 
