@@ -245,7 +245,7 @@ then
 	# log in new user and and set up servers
 	if [ $inst_serv -eq 1 ]
 	then
-		sudo -H -u $user sh -c '~/cod2install/parts/cod2_servers.sh'
+		sudo -H -u $user sh -c '~/cod2install/parts/cod2.sh'
 	fi
 else
 	# set up servers
