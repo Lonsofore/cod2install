@@ -136,12 +136,8 @@ then
 	
 	if (whiptail --title "Start sh" --yesno "Do you want start .sh file with your servers at system start?" 10 60) 
 	then
-		# save our current crontab
-		crontab -l > mycron
-		# add sh into cron file
-		echo "@reboot ~/start_all.sh" >> mycron
-		# install new cron file
-		crontab mycron
-		rm mycron
+		# add it in crontab
+		crontab -l | { cat; echo "@reboot ~/start_all.sh"; } | crontab -
+		service cron restart
 	fi
 fi

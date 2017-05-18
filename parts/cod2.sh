@@ -114,13 +114,9 @@ aria2c \
 EOF
 					
 		chmod +x ~/cod2/torrent/seed.sh
-		# save our current crontab
-		crontab -l > mycron
-		# add sh into cron file
-		echo "@reboot screen -S seed -d -m ~/cod2/torrent/seed.sh" >> mycron
-		# install new cron file
-		crontab mycron
-		rm mycron
+		# add it in crontab
+		crontab -l | { cat; echo "@reboot screen -S seed -d -m ~/cod2/torrent/seed.sh"; } | crontab -
+		service cron restart
 	fi
 fi
 
