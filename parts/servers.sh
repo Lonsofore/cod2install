@@ -14,12 +14,8 @@ whiptail \
 
 # sh with all servers
 create_sh=0
-create_sh1=1
-if [ -f ~/start_all.sh ]
+if [ ! -f ~/start_all.sh ]
 then
-	create_sh=1
-	create_sh1=1
-else
 	if (whiptail --title "Start sh" --yesno "Do you want to make a .sh file to start all your servers?" 10 60) 
 	then
 		create_sh=1
@@ -116,7 +112,7 @@ EOF
 			if (whiptail --title "Add server" --yesno "Add this server to .sh file with all servers?" 10 60) 
 			then
 				cat << EOF >> ~/start_all.sh
-screen -d -m ~/cod2_$ver/$srv_sh.sh
+screen -dm ~/cod2_$ver/$srv_sh.sh
 EOF
 			fi
 		fi
@@ -130,14 +126,14 @@ EOF
 done
 
 # sh with all servers
-if [ $create_sh -eq 1 ] && [ $create_sh1 -eq 0 ]
+if [ $create_sh -eq 1 ]
 then
 	chmod +x ~/start_all.sh
 	
 	if (whiptail --title "Start sh" --yesno "Do you want start .sh file with your servers at system start?" 10 60) 
 	then
 		# add it in crontab
-		crontab -l | { cat; echo "@reboot ~/start_all.sh"; } | crontab -
+		crontab -l | { cat; echo "@reboot /home/$USER/start_all.sh"; } | crontab -
 		service cron restart
 	fi
 fi

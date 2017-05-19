@@ -115,7 +115,7 @@ EOF
 					
 		chmod +x ~/cod2/torrent/seed.sh
 		# add it in crontab
-		crontab -l | { cat; echo "@reboot screen -S seed -d -m ~/cod2/torrent/seed.sh"; } | crontab -
+		crontab -l | { cat; echo "@reboot /usr/bin/screen -dmS seed /home/$USER/cod2/torrent/seed.sh"; } | crontab -
 		service cron restart
 	fi
 fi
