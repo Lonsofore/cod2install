@@ -27,6 +27,10 @@ mkdir ~/cod2_1_2/main
 mkdir ~/cod2/main/1.3
 mkdir ~/cod2_1_3
 mkdir ~/cod2_1_3/main
+
+
+# startup file (for torrent and servers)
+$DIRECTORY/startup.sh
 	
 
 # download main files
@@ -95,6 +99,7 @@ do
 	esac
 done
 
+
 # seed torrent on server start
 if [ $dl_mode -lt 3 ]
 then
@@ -114,9 +119,8 @@ aria2c \
 EOF
 					
 		chmod +x ~/cod2/torrent/seed.sh
-		# add it in crontab
-		crontab -l | { cat; echo "@reboot /usr/bin/screen -dmS seed /home/$USER/cod2/torrent/seed.sh"; } | crontab -
-		service cron restart
+		# add it in startup file
+		echo "screen -dmS seed ~/cod2/torrent/seed.sh" >> ~/startup.sh
 	fi
 fi
 

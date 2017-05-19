@@ -12,19 +12,6 @@ whiptail \
 --title "Servers" \
 --msgbox "Now place your servers folders (fs_game) in ~/cod2/servers/\nChoose Ok after upload." 10 60
 
-# sh with all servers
-create_sh=0
-if [ ! -f ~/start_all.sh ]
-then
-	if (whiptail --title "Start sh" --yesno "Do you want to make a .sh file to start all your servers?" 10 60) 
-	then
-		create_sh=1
-		cat << EOF >> ~/start_all.sh
-#!/bin/bash
-EOF
-	fi
-fi
-
 # setup servers
 srv_inst=1
 while [ $srv_inst -eq 1 ]
@@ -106,15 +93,10 @@ exit 1
 EOF
 		chmod +x ~/cod2_$ver/$srv_sh.sh
 		
-		# sh with all servers
-		if [ $create_sh -eq 1 ]
+		# add server to startup.sh
+		if (whiptail --title "Add server" --yesno "Add this server to startup.sh?" 10 60) 
 		then
-			if (whiptail --title "Add server" --yesno "Add this server to .sh file with all servers?" 10 60) 
-			then
-				cat << EOF >> ~/start_all.sh
-screen -dm ~/cod2_$ver/$srv_sh.sh
-EOF
-			fi
+			echo "screen -dm ~/cod2_$ver/$srv_sh.sh" >> ~/startup.sh
 		fi
 	done < versions
 	rm versions
@@ -124,16 +106,3 @@ EOF
 		srv_inst=0
 	fi
 done
-
-# sh with all servers
-if [ $create_sh -eq 1 ]
-then
-	chmod +x ~/start_all.sh
-	
-	if (whiptail --title "Start sh" --yesno "Do you want start .sh file with your servers at system start?" 10 60) 
-	then
-		# add it in crontab
-		crontab -l | { cat; echo "@reboot /home/$USER/start_all.sh"; } | crontab -
-		service cron restart
-	fi
-fi
