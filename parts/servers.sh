@@ -96,7 +96,7 @@ EOF
 		# add server to startup.sh
 		if (whiptail --title "Add server" --yesno "Add this server to startup.sh?" 10 60) 
 		then
-			echo "screen -dm ~/cod2_$ver/$srv_sh.sh" >> ~/startup.sh
+			echo "screen -dmS $ver\_$srv_sh ~/cod2_$ver/$srv_sh.sh" >> ~/startup.sh
 		fi
 	done < versions
 	rm versions
