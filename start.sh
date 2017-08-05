@@ -68,11 +68,11 @@ case $option in
 		"cod2-libraries" "All libraries for CoD2" ON \
 		"cod2-servers" "Setup your CoD2 servers" ON \
 		"new-user" "Create new user (for cod2)" ON \
-		"web-server" "Web server" ON \
-		"mysql-server" "MySQL server" ON \
-		"phpmyadmin" "MySQL administration" ON \
+		"web-server" "Web server" OFF \
+		"mysql-server" "MySQL server" OFF \
+		"phpmyadmin" "MySQL administration" OFF \
 		"noip-client" "Dyn dns (for gametracker.com)" OFF \
-		"zram" "Read about it in the internet!" OFF \
+		"zram" "Read about it on the internet!" OFF \
 		2>settings --separate-output || { echo "You chose cancel."; exit 1; }
 
 		while read choice
