@@ -1,33 +1,13 @@
 #!/bin/bash
 
-# path to sh
-ABSOLUTE_FILENAME=`readlink -e "$0"`
-# sh directory
-DIRECTORY=`dirname "$ABSOLUTE_FILENAME"`
-# main
-MAINDIRECTORY=$DIRECTORY/../
-
 # servers files
 whiptail \
 --title "Servers" \
---msgbox "Now place your servers folders (fs_game) in ~/cod2/servers/\nChoose Ok after upload." 10 60
-
-# sh with all servers
-create_sh=0
-if [ ! -f ~/start_all.sh ]
-then
-	if (whiptail --title "Start sh" --yesno "Do you want to make a .sh file to start all your servers?" 10 60) 
-	then
-		create_sh=1
-		cat << EOF >> ~/start_all.sh
-#!/bin/bash
-EOF
-	fi
-fi
+--msgbox "Now place your servers folders (fs_game) in ~/cod2/servers/\\nChoose Ok after upload." 10 60
 
 # setup servers
 srv_inst=1
-while [ $srv_inst -eq 1 ]
+while [ "$srv_inst" -eq 1 ]
 do
 	# sh file name
 	srv_sh=$(whiptail \
@@ -63,7 +43,7 @@ do
 	"1.3" "" ON \
 	2>versions || { echo "You chose cancel."; exit 1; }
 	
-	while read choice
+	while read -r choice
 	do
 		srv_port=$(whiptail \
 		--title "Server port" \
@@ -82,15 +62,15 @@ do
 		# create fs_home and link library there
 		fs_home=~/.callofduty2/"$srv_port"_"$srv_fs"
 		lib=~/cod2/Library/$srv_fs
-		mkdir $lib
-		mkdir $fs_home
-		ln -s $lib $fs_home/Library
+		mkdir "$lib"
+		mkdir "$fs_home"
+		ln -s "$lib" "$fs_home/Library"
 		
 		# link server folder to server version
-		ln -s ~/cod2/servers/$srv_fs ~/cod2_$ver/
+		ln -s "$HOME/cod2/servers/$srv_fs" "$HOME/cod2_$ver/"
 		
 		# make sh file
-		cat << EOF > ~/cod2_$ver/$srv_sh.sh
+		cat << EOF > "$HOME/cod2_$ver/$srv_sh.sh"
 #!/bin/bash
 
 export LD_PRELOAD="\$HOME/cod2_$ver/libcod2_$ver.so"
@@ -98,23 +78,18 @@ export LD_PRELOAD="\$HOME/cod2_$ver/libcod2_$ver.so"
 PARAMS="+set fs_homepath $HOME/.callofduty2_$ver +set fs_game $srv_fs +set dedicated 2 +set net_port $srv_port +exec $srv_cfg.cfg +set sv_cracked $srv_crck"
 
 while true ; do
-	"./cod2_lnxded" "\$PARAMS"
+	"\$HOME/cod2_$ver/cod2_lnxded" "\$PARAMS"
 	echo "Restarting the server..."
 	sleep 1
 done
 exit 1
 EOF
-		chmod +x ~/cod2_$ver/$srv_sh.sh
+		chmod +x "$HOME/cod2_$ver/$srv_sh.sh"
 		
-		# sh with all servers
-		if [ $create_sh -eq 1 ]
+		# add server to startup.sh
+		if (whiptail --title "Add server" --yesno "Add this server to startup.sh?" 10 60) 
 		then
-			if (whiptail --title "Add server" --yesno "Add this server to .sh file with all servers?" 10 60) 
-			then
-				cat << EOF >> ~/start_all.sh
-screen -dm ~/cod2_$ver/$srv_sh.sh
-EOF
-			fi
+			echo "(cd ./cod2_${ver} && screen -dmS ${srv_sh}_${ver} ./${srv_sh}.sh)" >> ~/startup.sh
 		fi
 	done < versions
 	rm versions
@@ -124,16 +99,3 @@ EOF
 		srv_inst=0
 	fi
 done
-
-# sh with all servers
-if [ $create_sh -eq 1 ]
-then
-	chmod +x ~/start_all.sh
-	
-	if (whiptail --title "Start sh" --yesno "Do you want start .sh file with your servers at system start?" 10 60) 
-	then
-		# add it in crontab
-		crontab -l | { cat; echo "@reboot /home/$USER/start_all.sh"; } | crontab -
-		service cron restart
-	fi
-fi
