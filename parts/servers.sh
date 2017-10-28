@@ -75,7 +75,7 @@ do
 
 export LD_PRELOAD="\$HOME/cod2_$ver/libcod2_$ver.so"
 
-PARAMS="+set fs_homepath $HOME/.callofduty2_$ver +set fs_game $srv_fs +set dedicated 2 +set net_port $srv_port +exec $srv_cfg.cfg +set sv_cracked $srv_crck"
+PARAMS="+set fs_homepath $HOME/.callofduty2/$srv_port +set fs_game $srv_fs +set dedicated 2 +set net_port $srv_port +exec $srv_cfg.cfg +set sv_cracked $srv_crck"
 
 while true ; do
 	"\$HOME/cod2_$ver/cod2_lnxded" "\$PARAMS"
