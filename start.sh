@@ -198,10 +198,6 @@ then
 		apt-get install php5-cgi -y
 		echo "done php5-cgi"
 		
-		# increase max file upload to 16M
-		sed '/upload_max_filesize/s/2M/16M/g' /etc/php5/cgi/php.ini > ~/php_new.ini 
-		mv ~/php_new.ini /etc/php5/cgi/php.ini
-		
 		# phpmyadmin
 		echo
 		echo "installing phpmyadmin..."
