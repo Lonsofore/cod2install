@@ -136,7 +136,7 @@ fi
 # tools
 echo
 echo "installing tools..."
-apt-get -y install geoip-bin git vim make screen zip unzip perl aria2
+apt-get -y install geoip-bin git nano make screen zip unzip perl aria2
 echo "done tools"
 
 # zram
