@@ -60,11 +60,11 @@ do
 		esac
 		
 		# create fs_home and link library there
-		fs_home=~/.callofduty2/"$srv_port"_"$srv_fs"
+		fs_home=~/.callofduty2/"$srv_port"
 		lib=~/cod2/Library/$srv_fs
 		mkdir "$lib"
 		mkdir "$fs_home"
-		ln -s "$lib" "$fs_home/Library"
+		ln -s "$lib" "$fs_home/$srv_fs/Library"
 		
 		# link server folder to server version
 		ln -s "$HOME/cod2/servers/$srv_fs" "$HOME/cod2_$ver/"
@@ -75,7 +75,7 @@ do
 
 export LD_PRELOAD="\$HOME/cod2_$ver/libcod2_$ver.so"
 
-PARAMS="+set fs_homepath $HOME/.callofduty2/"$srv_port"_"$srv_fs" +set fs_game $srv_fs +set dedicated 2 +set net_port $srv_port +exec $srv_cfg.cfg +set sv_cracked $srv_crck"
+PARAMS="+set fs_homepath $HOME/.callofduty2/$srv_port +set fs_game $srv_fs +set dedicated 2 +set net_port $srv_port +exec $srv_cfg.cfg +set sv_cracked $srv_crck"
 
 while true ; do
 	"\$HOME/cod2_$ver/cod2_lnxded" "\$PARAMS"
