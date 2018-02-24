@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# path to sh
+ABSOLUTE_FILENAME=$(readlink -e "$0")
+# sh directory
+DIRECTORY=$(dirname "$ABSOLUTE_FILENAME")
+
 # servers files
 whiptail \
 --title "Servers" \
@@ -91,7 +96,7 @@ EOF
 		then
 			if [ ! -f "$HOME/startup.sh" ]
 			then
-				"$DIRECTORY/startup.sh"
+				"$DIRECTORY"/startup.sh
 			fi
 			echo "(cd ./cod2_${ver} && screen -dmS ${srv_sh}_${ver} ./${srv_sh}.sh)" >> ~/startup.sh
 		fi
