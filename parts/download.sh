@@ -77,7 +77,7 @@ if [ "$dl_mode" -lt 3 ]
 then
 	if [ ! -f "$HOME/startup.sh" ]
 	then
-		"$DIRECTORY/startup.sh"
+		"$DIRECTORY"/startup.sh
 	fi
 	
 	if (whiptail --title "Done" --yesno "Main files downloaded!\\nDo you want to seed our torrent? It will start with your server automatically." 10 60) 
