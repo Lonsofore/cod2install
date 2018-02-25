@@ -19,10 +19,8 @@ So, any beginner, even he doesn't know anything about Linux can install CoD2 ser
 All what you need to start cod2 server(s): 
 - Updating and upgrading packets
 - Install all libs for cod2
-- Install some tools, which you will need (screen git make zip unzip geoip-bin vim)
+- Install some tools, which you will need (screen git make zip unzip geoip-bin)
 - Ask you to install no-ip client (for dynamic dns. you will need this for gametracker.com)
-- Ask you to install web-server (lighttpd or apache2 - on your own)
-- Ask you to install phpmyadmin (only if you installed web-server)
 - Creates new user for cod2 (will ask you about name)
 - Creates all cod2 folders for all versions (it will use links, so you don't have to have main files for all versions)
 - Ask you to upload main files by yourself or download it from my link or download it from torrent!

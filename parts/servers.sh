@@ -1,20 +1,42 @@
 #!/bin/bash
 
 # path to sh
-ABSOLUTE_FILENAME=`readlink -e "$0"`
+ABSOLUTE_FILENAME=$(readlink -e "$0")
 # sh directory
-DIRECTORY=`dirname "$ABSOLUTE_FILENAME"`
-# main
-MAINDIRECTORY=$DIRECTORY/../
+DIRECTORY=$(dirname "$ABSOLUTE_FILENAME")
 
-# servers files
-whiptail \
+
+# server files
+srv_upload=$(whiptail \
 --title "Servers" \
---msgbox "Now place your servers folders (fs_game) in ~/cod2/servers/\nChoose Ok after upload." 10 60
+--menu "Choose, how do you want to upload servers folders (fs_game):" 10 60 2 \
+"1" "Upload it by yourself via FTP" \
+"2" "Upload it from another server via SSH" \
+3>&1 1>&2 2>&3)
+
+case $srv_upload in
+1)
+	whiptail \
+	--title "Servers" \
+	--msgbox "Now place your servers folders (fs_game) in ~/cod2/servers/\\nChoose Ok after upload." 10 60
+2)
+	upload_host=$(whiptail \
+	--title "Connection" \
+	--inputbox "Enter the remote host name" 10 60 \
+	3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
+	
+	upload_login=$(whiptail \
+	--title "Connection" \
+	--inputbox "Enter the remote host login" 10 60 \
+	3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
+	
+	scp "$upload_login"@"$upload_host":cod2/servers cod2/servers
+esac
+
 
 # setup servers
 srv_inst=1
-while [ $srv_inst -eq 1 ]
+while [ "$srv_inst" -eq 1 ]
 do
 	# sh file name
 	srv_sh=$(whiptail \
@@ -50,7 +72,7 @@ do
 	"1.3" "" ON \
 	2>versions || { echo "You chose cancel."; exit 1; }
 	
-	while read choice
+	while read -r choice
 	do
 		srv_port=$(whiptail \
 		--title "Server port" \
@@ -67,22 +89,24 @@ do
 		esac
 		
 		# create fs_home and link library there
-		fs_home=~/.callofduty2/"$srv_port"_"$srv_fs"
-		lib=~/cod2/Library/$srv_fs
-		mkdir $lib
-		mkdir $fs_home
-		ln -s $lib $fs_home/Library
+		fs_home=~/.callofduty2/"$srv_port"
+		lib=~/cod2/Library/"$srv_fs"
+		mkdir "$lib"
+		mkdir "$fs_home"
+		mkdir "$fs_home"/"$srv_fs"
+		ln -s "$lib" "$fs_home"/"$srv_fs"/Library
 		
 		# link server folder to server version
-		ln -s ~/cod2/servers/$srv_fs ~/cod2_$ver/
+		ln -s "$HOME"/cod2/servers/"$srv_fs" "$HOME"/cod2_"$ver"/
 		
 		# make sh file
-		cat << EOF > ~/cod2_$ver/$srv_sh.sh
+		shfile="$HOME"/cod2_"$ver"/"$srv_sh".sh
+		cat << EOF > $shfile
 #!/bin/bash
 
 export LD_PRELOAD="\$HOME/cod2_$ver/libcod2_$ver.so"
 
-PARAMS="+set fs_homepath $HOME/.callofduty2_$ver +set fs_game $srv_fs +set dedicated 2 +set net_port $srv_port +exec $srv_cfg.cfg +set sv_cracked $srv_crck"
+PARAMS="+set fs_homepath $HOME/.callofduty2/$srv_port +set fs_game $srv_fs +set dedicated 2 +set net_port $srv_port +exec $srv_cfg.cfg +set sv_cracked $srv_crck"
 
 while true ; do
 	"\$HOME/cod2_$ver/cod2_lnxded" "\$PARAMS"
@@ -91,12 +115,17 @@ while true ; do
 done
 exit 1
 EOF
-		chmod +x ~/cod2_$ver/$srv_sh.sh
+		chmod +x $shfile
 		
 		# add server to startup.sh
+		startup=~/startup.sh
 		if (whiptail --title "Add server" --yesno "Add this server to startup.sh?" 10 60) 
 		then
-			echo "screen -dmS $ver\_$srv_sh ~/cod2_$ver/$srv_sh.sh" >> ~/startup.sh
+			if [ ! -f $startup ]
+			then
+				"$DIRECTORY"/startup.sh
+			fi
+			echo "(cd ./cod2_${ver} && screen -dmS ${srv_sh}_${ver} ./${srv_sh}.sh)" >> $startup
 		fi
 	done < versions
 	rm versions
@@ -106,3 +135,13 @@ EOF
 		srv_inst=0
 	fi
 done
+
+
+# upload maps from the old server
+if [ $srv_upload -eq 1 ]
+then
+	if (whiptail --title "Upload maps" --yesno "Do you want to upload maps from your old server via SSH?" 10 60) 
+	then
+		scp "$upload_login"@"$upload_host":cod2/Library cod2/Library
+	fi
+fi

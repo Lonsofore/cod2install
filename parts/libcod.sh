@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # libcod
-cd ~/cod2 || exit 1
+cd ~/cod2 || { echo "Error! libcod.sh line 4"; exit 1; }
 git clone https://github.com/voron00/libcod
-cd libcod
+cd libcod || { echo "Error! libcod.sh line 6"; exit 1; }
 
 ./doit.sh cod2_1_0
 mv bin/libcod2_1_0.so ~/cod2_1_0/libcod2_1_0.so

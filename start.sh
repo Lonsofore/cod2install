@@ -1,12 +1,13 @@
 #!/bin/bash
 
 # path to sh
-ABSOLUTE_FILENAME=`readlink -e "$0"`
+ABSOLUTE_FILENAME=$(readlink -e "$0")
 # sh directory
-DIRECTORY=`dirname "$ABSOLUTE_FILENAME"`
+DIRECTORY=$(dirname "$ABSOLUTE_FILENAME")
+
 
 # sh files
-chmod 500 $DIRECTORY/parts -R
+chmod 500 "$DIRECTORY/parts" -R
 
 # update packages
 echo "updating packets..."
@@ -22,7 +23,7 @@ apt-get install whiptail -y
 
 whiptail \
 --title "About" \
---msgbox "Welcome to cod2install.\nVisit https://github.com/lonsofore/cod2install to get more information.\nChoose Ok to continue." 10 60
+--msgbox "Welcome to cod2install.\\nVisit https://github.com/lonsofore/cod2install to get more information.\\nChoose Ok to continue." 10 60
 
 option=$(whiptail \
 --title "Install mode" \
@@ -68,14 +69,14 @@ case $option in
 		"cod2-libraries" "All libraries for CoD2" ON \
 		"cod2-servers" "Setup your CoD2 servers" ON \
 		"new-user" "Create new user (for cod2)" ON \
-		"web-server" "Web server" ON \
-		"mysql-server" "MySQL server" ON \
-		"phpmyadmin" "MySQL administration" ON \
+		"web-server" "Web server" OFF \
+		"mysql-server" "MySQL server" OFF \
+		"phpmyadmin" "MySQL administration" OFF \
 		"noip-client" "Dyn dns (for gametracker.com)" OFF \
-		"zram" "Read about it in the internet!" OFF \
+		"zram" "Read about it on the internet!" OFF \
 		2>settings --separate-output || { echo "You chose cancel."; exit 1; }
 
-		while read choice
+		while read -r choice
 		do
 			case $choice in
 				cod2-libraries) inst_lib=1
@@ -136,7 +137,7 @@ fi
 # tools
 echo
 echo "installing tools..."
-apt-get -y install geoip-bin git vim make screen zip unzip perl aria2
+apt-get -y install git ssh scp nano make screen zip unzip perl aria2 geoip-bin
 echo "done tools"
 
 # zram
@@ -148,13 +149,13 @@ fi
 # cod2 requirements
 if [ $inst_lib -eq 1 ]
 then
-	$DIRECTORY/parts/req.sh
+	"$DIRECTORY/parts/req.sh"
 fi
 
 # noip
 if [ $inst_noip -eq 1 ]
 then
-	$DIRECTORY/parts/noip.sh
+	"$DIRECTORY/parts/noip.sh"
 fi
 
 # web server
@@ -170,7 +171,7 @@ then
 	fi
 	
 	# web server: lighttpd or apache2
-	if [ $inst_web_serv -eq 1 ]
+	if [ "$inst_web_serv" -eq 1 ]
 	then
 		echo
 		echo "installing lighttpd..."
@@ -198,10 +199,6 @@ then
 		apt-get install php5-cgi -y
 		echo "done php5-cgi"
 		
-		# increase max file upload to 16M
-		sed '/upload_max_filesize/s/2M/16M/g' /etc/php5/cgi/php.ini > ~/php_new.ini 
-		mv ~/php_new.ini /etc/php5/cgi/php.ini
-		
 		# phpmyadmin
 		echo
 		echo "installing phpmyadmin..."
@@ -210,14 +207,10 @@ then
 		ln -s /usr/share/phpmyadmin/ /var/www/
 	fi
 	
-	# protection: phpmyadmin can install apache2
-	if [ $inst_web_serv -eq 1 ]
+	# restart
+	if [ "$inst_web_serv" -eq 1 ]
 	then
 		service lighttpd restart
-		#service lighttpd stop
-		#service apache2 stop
-		#apt-get purge apache2 -y
-		#service lighttpd start
 	else
 		service apache2 restart
 	fi
@@ -232,20 +225,20 @@ then
 	3>&1 1>&2 2>&3)
 	
 	echo 
-	useradd $user -m -s /bin/bash
+	useradd "$user" -m -s /bin/bash
 	echo "created user $user"
-	passwd $user
+	passwd "$user"
 	echo
 	
 	# copy files to new user
-	cp ~/cod2install /home/$user/cod2install -R
-	chown $user:$user /home/$user -R
-	chmod 700 /home/$user/cod2install -R
+	cp ~/cod2install "/home/$user/cod2install" -R
+	chown "$user:$user" "/home/$user" -R
+	chmod 700 "/home/$user/cod2install" -R
 	
 	# log in new user and and set up servers
 	if [ $inst_serv -eq 1 ]
 	then
-		sudo -H -u $user sh -c '~/cod2install/parts/cod2.sh'
+		sudo -H -u $user sh -c "/home/$user/cod2install/parts/cod2.sh"
 	fi
 else
 	# set up servers
