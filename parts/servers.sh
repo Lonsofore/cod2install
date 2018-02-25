@@ -19,6 +19,8 @@ case $srv_upload in
 	whiptail \
 	--title "Servers" \
 	--msgbox "Now place your servers folders (fs_game) in ~/cod2/servers/\\nChoose Ok after upload." 10 60
+	;;
+	
 2)
 	upload_host=$(whiptail \
 	--title "Connection" \
@@ -31,6 +33,8 @@ case $srv_upload in
 	3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 	
 	scp "$upload_login"@"$upload_host":cod2/servers cod2/servers
+	;;
+	
 esac
 
 
