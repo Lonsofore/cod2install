@@ -7,6 +7,7 @@ DIRECTORY=$(dirname "$ABSOLUTE_FILENAME")
 # main
 MAINDIRECTORY=$DIRECTORY/../
 
+
 # functions
 function install_folders {
 	mkdir ~/cod2/main/"$1"

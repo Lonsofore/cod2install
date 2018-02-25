@@ -5,6 +5,7 @@ ABSOLUTE_FILENAME=$(readlink -e "$0")
 # sh directory
 DIRECTORY=$(dirname "$ABSOLUTE_FILENAME")
 
+
 # sh files
 chmod 500 "$DIRECTORY/parts" -R
 
@@ -136,7 +137,7 @@ fi
 # tools
 echo
 echo "installing tools..."
-apt-get -y install geoip-bin git nano make screen zip unzip perl aria2
+apt-get -y install git ssh scp nano make screen zip unzip perl aria2 geoip-bin
 echo "done tools"
 
 # zram
