@@ -69,7 +69,8 @@ do
 		lib=~/cod2/Library/$srv_fs
 		mkdir "$lib"
 		mkdir "$fs_home"
-		ln -s "$lib" "$fs_home/$srv_fs/Library"
+		mkdir "$fs_home"/"$srv_fs"
+		ln -s "$lib" "$fs_home"/"$srv_fs"/Library
 		
 		# link server folder to server version
 		ln -s "$HOME/cod2/servers/$srv_fs" "$HOME/cod2_$ver/"
