@@ -5,6 +5,7 @@ ABSOLUTE_FILENAME=$(readlink -e "$0")
 # sh directory
 DIRECTORY=$(dirname "$ABSOLUTE_FILENAME")
 
+
 # server files
 srv_upload=$(whiptail \
 --title "Servers" \
@@ -31,6 +32,7 @@ case $srv_upload in
 	
 	scp "$upload_login"@"$upload_host":cod2/servers cod2/servers
 esac
+
 
 # setup servers
 srv_inst=1
@@ -88,17 +90,18 @@ do
 		
 		# create fs_home and link library there
 		fs_home=~/.callofduty2/"$srv_port"
-		lib=~/cod2/Library/$srv_fs
+		lib=~/cod2/Library/"$srv_fs"
 		mkdir "$lib"
 		mkdir "$fs_home"
 		mkdir "$fs_home"/"$srv_fs"
 		ln -s "$lib" "$fs_home"/"$srv_fs"/Library
 		
 		# link server folder to server version
-		ln -s "$HOME/cod2/servers/$srv_fs" "$HOME/cod2_$ver/"
+		ln -s "$HOME"/cod2/servers/"$srv_fs" "$HOME"/cod2_"$ver"/
 		
 		# make sh file
-		cat << EOF > "$HOME/cod2_$ver/$srv_sh.sh"
+		shfile="$HOME"/cod2_"$ver"/"$srv_sh".sh
+		cat << EOF > $shfile
 #!/bin/bash
 
 export LD_PRELOAD="\$HOME/cod2_$ver/libcod2_$ver.so"
@@ -112,16 +115,17 @@ while true ; do
 done
 exit 1
 EOF
-		chmod +x "$HOME/cod2_$ver/$srv_sh.sh"
+		chmod +x $shfile
 		
 		# add server to startup.sh
+		startup=~/startup.sh
 		if (whiptail --title "Add server" --yesno "Add this server to startup.sh?" 10 60) 
 		then
-			if [ ! -f "$HOME/startup.sh" ]
+			if [ ! -f $startup ]
 			then
 				"$DIRECTORY"/startup.sh
 			fi
-			echo "(cd ./cod2_${ver} && screen -dmS ${srv_sh}_${ver} ./${srv_sh}.sh)" >> ~/startup.sh
+			echo "(cd ./cod2_${ver} && screen -dmS ${srv_sh}_${ver} ./${srv_sh}.sh)" >> $startup
 		fi
 	done < versions
 	rm versions
@@ -131,3 +135,13 @@ EOF
 		srv_inst=0
 	fi
 done
+
+
+# upload maps from the old server
+if [ $srv_upload -eq 1 ]
+then
+	if (whiptail --title "Upload maps" --yesno "Do you want to upload maps from your old server via SSH?" 10 60) 
+	then
+		scp "$upload_login"@"$upload_host":cod2/Library cod2/Library
+	fi
+fi
