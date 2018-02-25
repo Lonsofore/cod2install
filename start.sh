@@ -181,8 +181,6 @@ then
 		lighty-enable-mod cgi
 		lighty-enable-mod fastcgi
 		lighty-enable-mod fastcgi-php
-		
-		service lighttpd stop
 	else
 		echo
 		echo "installing apache2..."
@@ -193,17 +191,42 @@ then
 	# phpmyadmin
 	if [ $inst_pma -eq 1 ]
 	then
-		# we should install php5-cgi before
-		echo
-		echo "installing php5-cgi..."
-		apt-get install php5-cgi -y
-		echo "done php5-cgi"
+		# to prevent installing apache2
+		os_ver=$(lsb_release -r -s)
+		if [ "$os_ver" == "14.04" ]
+		then
+			# we should install php5-cgi before
+			echo
+			echo "installing php5-cgi..."
+			apt-get install php5-cgi -y
+			echo "done php5-cgi"
+			
+			# php5-fpm also
+			echo
+			echo "installing php5-fpm..."
+			apt-get install php5-fpm -y
+			echo "done php5-fpm"
+		else
+			# we should install php-cgi before
+			echo
+			echo "installing php-cgi..."
+			apt-get install php-cgi -y
+			echo "done php-cgi"
+			
+			# php-fpm also
+			echo
+			echo "installing php-fpm..."
+			apt-get install php-fpm -y
+			echo "done php-fpm"
+		fi
 		
 		# phpmyadmin
 		echo
 		echo "installing phpmyadmin..."
 		apt-get -y install phpmyadmin
 		echo "done phpmyadmin"
+		
+		# link it
 		ln -s /usr/share/phpmyadmin/ /var/www/
 	fi
 	
