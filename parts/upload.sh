@@ -34,7 +34,7 @@ case $srv_upload in
 		--passwordbox  "Enter the remote host password" 10 60 \
 		3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 		
-		ssh -q user@downhost exit
+		ssh -q "$upload_login"@"$upload_host" exit
 		if [ $? -eq 0 ]
 		then
 			whiptail \
@@ -101,7 +101,7 @@ case $srv_upload in
 			fi
 						
 		else
-			if (whiptail --title "Error!" --yesno "Can't connect to the remote host. Would you like to try again?" 10 60) 
+			if ! (whiptail --title "Error!" --yesno "Can't connect to the remote host. Would you like to try again?" 10 60) 
 			then
 				try_upload=0
 			fi
