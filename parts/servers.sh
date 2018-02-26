@@ -6,38 +6,6 @@ ABSOLUTE_FILENAME=$(readlink -e "$0")
 DIRECTORY=$(dirname "$ABSOLUTE_FILENAME")
 
 
-# server files
-srv_upload=$(whiptail \
---title "Servers" \
---menu "Choose, how do you want to upload servers folders (fs_game):" 10 60 2 \
-"1" "Upload it by yourself via FTP" \
-"2" "Upload it from another server via SSH" \
-3>&1 1>&2 2>&3)
-
-case $srv_upload in
-1)
-	whiptail \
-	--title "Servers" \
-	--msgbox "Now place your servers folders (fs_game) in ~/cod2/servers/\\nChoose Ok after upload." 10 60
-	;;
-	
-2)
-	upload_host=$(whiptail \
-	--title "Connection" \
-	--inputbox "Enter the remote host name" 10 60 \
-	3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
-	
-	upload_login=$(whiptail \
-	--title "Connection" \
-	--inputbox "Enter the remote host login" 10 60 \
-	3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
-	
-	scp -r "$upload_login"@"$upload_host":~/cod2/servers ~/cod2
-	;;
-	
-esac
-
-
 # setup servers
 srv_inst=1
 while [ "$srv_inst" -eq 1 ]
@@ -139,13 +107,3 @@ EOF
 		srv_inst=0
 	fi
 done
-
-
-# upload maps from the old server
-if [ $srv_upload -eq 2 ]
-then
-	if (whiptail --title "Upload maps" --yesno "Do you want to upload maps from your old server via SSH?" 10 60) 
-	then
-		scp -r "$upload_login"@"$upload_host":~/cod2/Library ~/cod2
-	fi
-fi
