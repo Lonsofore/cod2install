@@ -38,7 +38,7 @@ This is the latest patched versions of CoD2 servers (from [this thread](https://
 
 
 ## And what do you need to start it:
-0. Get VDS with Ubuntu 14.04 and log in as root there.
+0. Get VDS with Ubuntu 14.04 or 16.04 and log in as root there.
 1. On command line, type in the following commands:
 ```sh
 apt-get update
