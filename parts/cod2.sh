@@ -72,5 +72,8 @@ then
 	install_pb 1_3
 fi
 
+# upload from the old server
+"$DIRECTORY"/upload.sh
+
 # setup servers
 "$DIRECTORY"/servers.sh
