@@ -85,11 +85,11 @@ case $srv_upload in
 				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 
 				mysql_pass=$(whiptail \
-				--title Remote "MySQL" \
+				--title "Remote MySQL" \
 				--passwordbox  "Enter mysql password" 10 60 \
 				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 			
-				sshpass -p "$upload_pass" ssh -X "$upload_login"@"$upload_host" 'mysqldump -u"$mysql_login" -p"$mysql_pass" --all-databases' > backup.sql
+				sshpass -p "$upload_pass" ssh -X "$upload_login"@"$upload_host" "mysqldump -u$mysql_login -p$mysql_pass --all-databases" > backup.sql
 				
 				mysql_login1=$(whiptail \
 				--title "Local MySQL" \
@@ -97,11 +97,11 @@ case $srv_upload in
 				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 
 				mysql_pass1=$(whiptail \
-				--title Local "MySQL" \
+				--title "Local MySQL" \
 				--passwordbox  "Enter mysql password" 10 60 \
 				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 				
-				mysql -u"$mysql_login1" –-password="$mysql_pass1" < backup.sql 
+				mysql -u"$mysql_login1" -p"$mysql_pass1" < backup.sql 
 				echo "done db"
 			fi
 			
