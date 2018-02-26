@@ -9,7 +9,7 @@ DIRECTORY=$(dirname "$ABSOLUTE_FILENAME")
 # server files
 srv_upload=$(whiptail \
 --title "Servers" \
---menu "Do you want to upload files from your old server via SSH?:" 10 60 2 \
+--menu "Do you want to upload files from your old server via SSH? (only if it was installed with cod2install)" 10 60 2 \
 "1" "Yes, let's upload it via SSH" \
 "2" "No, I'll upload it by myself via FTP" \
 3>&1 1>&2 2>&3)
