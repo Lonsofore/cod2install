@@ -34,7 +34,7 @@ case $srv_upload in
 		--passwordbox  "Enter the remote host password" 10 60 \
 		3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 		
-		ssh -q "$upload_login"@"$upload_host" exit
+		sshpass -p "$upload_pass" ssh -q "$upload_login"@"$upload_host" exit
 		if [ $? -eq 0 ]
 		then
 			whiptail \
@@ -61,35 +61,47 @@ case $srv_upload in
 				esac
 			done < settings
 			
-			if [ "$servers" -eq 1 ]
+			if [ $servers -eq 1 ]
 			then
 				sshpass -p "$upload_pass" scp -r "$upload_login"@"$upload_host":~/cod2/servers ~/cod2
 				echo "done servers"
 			fi
 			
-			if [ "$maps" -eq 1 ]
+			if [ $maps -eq 1 ]
 			then
 				sshpass -p "$upload_pass" scp -r "$upload_login"@"$upload_host":~/cod2/Library ~/cod2
 				echo "done maps"
 			fi
 			
-			if [ "$db" -eq 1 ]
+			if [ $db -eq 1 ]
 			then
 				mysql_login=$(whiptail \
-				--title "MySQL" \
+				--title "Remote MySQL" \
 				--inputbox "Enter mysql login" 10 60 \
 				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 
 				mysql_pass=$(whiptail \
-				--title "MySQL" \
+				--title Remote "MySQL" \
 				--passwordbox  "Enter mysql password" 10 60 \
 				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 			
 				sshpass -p "$upload_pass" ssh -X "$upload_login"@"$upload_host" 'mysqldump -u"$mysql_login" -p"$mysql_pass" --all-databases' > backup.sql
+				
+				mysql_login1=$(whiptail \
+				--title "Local MySQL" \
+				--inputbox "Enter mysql login" 10 60 \
+				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
+
+				mysql_pass1=$(whiptail \
+				--title Local "MySQL" \
+				--passwordbox  "Enter mysql password" 10 60 \
+				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
+				
+				mysql -u"$mysql_login1" –-password="$mysql_pass1" < backup.sql 
 				echo "done db"
 			fi
 			
-			if [ "$libcod" -eq 1 ]
+			if [ $libcod -eq 1 ]
 			then
 				rm ~/cod2_1_0/libcod2_1_0.so
 				rm ~/cod2_1_2/libcod2_1_2.so
@@ -99,7 +111,9 @@ case $srv_upload in
 				sshpass -p "$upload_pass" scp -r "$upload_login"@"$upload_host":~/cod2_1_3/libcod2_1_3.so ~/cod2_1_3
 				echo "done libcod"
 			fi
-						
+			
+			try_upload=0
+			
 		else
 			if ! (whiptail --title "Error!" --yesno "Can't connect to the remote host. Would you like to try again?" 10 60) 
 			then
