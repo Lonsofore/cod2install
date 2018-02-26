@@ -46,6 +46,10 @@ case $srv_upload in
 			"libcod" "libcod version" OFF \
 			2>settings --separate-output || { echo "You chose cancel."; exit 1; }
 
+			upload_servers=0
+			upload_maps=0
+			upload_db=0
+			upload_libcod=0
 			while read -r choice
 			do
 				case $choice in
@@ -61,19 +65,19 @@ case $srv_upload in
 				esac
 			done < settings
 			
-			if [ $servers -eq 1 ]
+			if [ $upload_servers -eq 1 ]
 			then
 				sshpass -p "$upload_pass" scp -r "$upload_login"@"$upload_host":~/cod2/servers ~/cod2
 				echo "done servers"
 			fi
 			
-			if [ $maps -eq 1 ]
+			if [ $upload_maps -eq 1 ]
 			then
 				sshpass -p "$upload_pass" scp -r "$upload_login"@"$upload_host":~/cod2/Library ~/cod2
 				echo "done maps"
 			fi
 			
-			if [ $db -eq 1 ]
+			if [ $upload_db -eq 1 ]
 			then
 				mysql_login=$(whiptail \
 				--title "Remote MySQL" \
@@ -101,7 +105,7 @@ case $srv_upload in
 				echo "done db"
 			fi
 			
-			if [ $libcod -eq 1 ]
+			if [ $upload_libcod -eq 1 ]
 			then
 				rm ~/cod2_1_0/libcod2_1_0.so
 				rm ~/cod2_1_2/libcod2_1_2.so
