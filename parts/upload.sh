@@ -64,6 +64,7 @@ case $srv_upload in
 					
 				esac
 			done < settings
+			rm settings
 			
 			if [ $upload_servers -eq 1 ]
 			then
@@ -102,6 +103,7 @@ case $srv_upload in
 				3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 				
 				mysql -u"$mysql_login1" -p"$mysql_pass1" < backup.sql 
+				rm backup.sql
 				echo "done db"
 			fi
 			
