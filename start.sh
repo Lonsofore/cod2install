@@ -137,7 +137,8 @@ fi
 # tools
 echo
 echo "installing tools..."
-apt-get -y install git ssh scp nano make screen zip unzip perl aria2 geoip-bin
+for pack in git ssh scp nano make screen zip unzip perl aria2 geoip-bin man-db; 
+do apt-get -y install $pack; done
 echo "done tools"
 
 # zram
