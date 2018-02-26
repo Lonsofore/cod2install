@@ -19,6 +19,8 @@ case $srv_upload in
 	whiptail \
 	--title "Servers" \
 	--msgbox "Now place your servers folders (fs_game) in ~/cod2/servers/\\nChoose Ok after upload." 10 60
+	;;
+	
 2)
 	upload_host=$(whiptail \
 	--title "Connection" \
@@ -30,7 +32,9 @@ case $srv_upload in
 	--inputbox "Enter the remote host login" 10 60 \
 	3>&1 1>&2 2>&3) || { echo "You chose cancel."; exit 1; }
 	
-	scp "$upload_login"@"$upload_host":cod2/servers cod2/servers
+	scp -r "$upload_login"@"$upload_host":~/cod2/servers ~/cod2
+	;;
+	
 esac
 
 
@@ -138,10 +142,10 @@ done
 
 
 # upload maps from the old server
-if [ $srv_upload -eq 1 ]
+if [ $srv_upload -eq 2 ]
 then
 	if (whiptail --title "Upload maps" --yesno "Do you want to upload maps from your old server via SSH?" 10 60) 
 	then
-		scp "$upload_login"@"$upload_host":cod2/Library cod2/Library
+		scp -r "$upload_login"@"$upload_host":~/cod2/Library ~/cod2
 	fi
 fi
