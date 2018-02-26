@@ -137,7 +137,7 @@ fi
 # tools
 echo
 echo "installing tools..."
-for pack in git ssh scp nano make screen zip unzip perl aria2 geoip-bin man-db; 
+for pack in git ssh scp nano make screen zip unzip perl aria2 geoip-bin man-db sqlite sshpass; 
 do apt-get -y install $pack; done
 echo "done tools"
 
